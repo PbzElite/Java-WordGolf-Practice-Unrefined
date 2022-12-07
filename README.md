@@ -1,5 +1,6 @@
 # Java-WordGolf-Practice-Unrefined
 # This code is used to make the game Word Golf
+# Current Issue: getDistanceFrom() is not working properly
 import java.util.Scanner;
 
 class Hole {
@@ -20,6 +21,7 @@ class WordGolf {
 	private int strokes;
 	private String sentence;
 	private int yardage;
+	private int distanceFrom;
 
 	public WordGolf(){
 		strokes = 1;
@@ -27,6 +29,7 @@ class WordGolf {
 		yardage = 0;
 		h1 = new Hole();
 		h2 = new Hole();
+		distanceFrom = h1.getDistance();
 	}
 
 	public void startGame(){
@@ -52,12 +55,11 @@ class WordGolf {
 		int numSpaces = 0;
 		String str = "";
 		int result = 0;
+		String sen = sentence;
 
-		for(int i = 0; i < sentence.length();i++){
-			if(sentence.charAt(i) == ' '){
+		for(int i = 0; i < sen.length();i++){
+			if(sen.charAt(i) == ' '){
 				numSpaces++;
-				//str = sentence.substring(0,i);
-				//sentence = sentence.substring(i+1);
 			}
 		}
 
@@ -65,11 +67,11 @@ class WordGolf {
 			return 0;
 		}
 
-		//if(sentence.indexOf(" ") >= 0)
-			//str = sentence.substring(0,sentence.indexOf(" "));
-		while(sentence.length() > 0){
-			if(sentence.indexOf(" ") != -1) { 
-				str = sentence.substring(0,sentence.indexOf(" "));
+		while(sen.length() > 0){
+			if(sen.indexOf(" ") != -1) { 
+				str = sen.substring(0,sen.indexOf(" "));
+			} else {
+				str = sen;
 			}
 			int total = 1;
 			for(int i = 0;i<str.length();i++){
@@ -79,15 +81,12 @@ class WordGolf {
 					total += 1;
 				}
 			}
-			result = total;
-			sentence = sentence.substring(sentence.indexOf(" ") + 1);
-			
-			//if(sentence.indexOf(" ") > 0){
-				//str = sentence.substring(0,sentence.indexOf(" "));
-			//} else {
-				//str = "";
-				//break;
-			//}
+			result += total;
+			if(sen.indexOf(" ") >= 0){
+				sen = sen.substring(sen.indexOf(" ") + 1);
+			} else {
+				sen = "";	
+			}
 		}
 
 		return result;
@@ -98,7 +97,11 @@ class WordGolf {
 	}
 
 	public int getDistanceFrom(Hole h){
-		return h.getDistance() - this.yardage;
+		if(distanceFrom - computeYardage() > 0)	
+			distanceFrom -= computeYardage();
+		else
+			distanceFrom += computeYardage();
+		return distanceFrom;
 	}
 }
 
