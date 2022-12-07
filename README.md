@@ -1,6 +1,6 @@
 # Java-WordGolf-Practice-Unrefined
 # This code is used to make the game Word Golf
-#import java.util.Scanner;
+import java.util.Scanner;
 
 class Hole {
 	private int targetDistance;
@@ -65,8 +65,12 @@ class WordGolf {
 			return 0;
 		}
 
-		str = sentence.substring(0,sentence.indexOf(" "));
+		//if(sentence.indexOf(" ") >= 0)
+			//str = sentence.substring(0,sentence.indexOf(" "));
 		while(sentence.length() > 0){
+			if(sentence.indexOf(" ") != -1) { 
+				str = sentence.substring(0,sentence.indexOf(" "));
+			}
 			int total = 1;
 			for(int i = 0;i<str.length();i++){
 				if(str.charAt(i) == 'a' || str.charAt(i) == 'e' || str.charAt(i) == 'i' || str.charAt(i) == 'o' || str.charAt(i) == 'u'){
@@ -78,11 +82,12 @@ class WordGolf {
 			result = total;
 			sentence = sentence.substring(sentence.indexOf(" ") + 1);
 			
-			if(sentence.indexOf(" ") > 0){
-				str = sentence.substring(0,sentence.indexOf(" "));
-			} else {
-				str = ""; 
-			}
+			//if(sentence.indexOf(" ") > 0){
+				//str = sentence.substring(0,sentence.indexOf(" "));
+			//} else {
+				//str = "";
+				//break;
+			//}
 		}
 
 		return result;
